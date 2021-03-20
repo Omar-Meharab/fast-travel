@@ -12,3 +12,13 @@ ul li{
     color: white;
     text-decoration: none;
 }
+
+.text{
+    background-color: goldenrod;
+    border: 0px white;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 50px;
+    padding: 10px;
+    float: left;
+}

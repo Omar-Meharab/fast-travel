@@ -6,7 +6,7 @@ const Vehicle = (props) => {
     const {name, image} = props.vehicle;
     const history = useHistory();
     const destination = name => {
-        const url =`/${name}`;
+        const url =`destination/${name}`;
         history.push(url);
     }
     return (
