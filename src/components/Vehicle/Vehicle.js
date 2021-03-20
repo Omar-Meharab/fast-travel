@@ -1,14 +1,19 @@
 import './Vehicle.css';
 import React from 'react';
+import { useHistory } from 'react-router';
 
 const Vehicle = (props) => {
-    console.log(props.vehicle);
     const {name, image} = props.vehicle;
+    const history = useHistory();
+    const destination = name => {
+        const url =`/${name}`;
+        history.push(url);
+    }
     return (
-            <div class="card">
-                <img class="card-img-top img-fluid" src={image} alt="" />
-                <div class="card-body">
-                    <h5 class="card-title">{name}</h5>
+            <div onClick={() => destination(name)} className="card">
+                <img className="card-img-top img-fluid" src={image} alt="" />
+                <div className="card-body">
+                    <h5 className="card-title">{name}</h5>
                 </div>
             </div>
     );

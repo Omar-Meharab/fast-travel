@@ -12,9 +12,9 @@ const Home = () => {
         <div className="center">
             <h1>Select Your Ride From These {vehicle.length} choices</h1>
             <div className="card-deck">
-            {
-                vehicleData.map(vehicle => <Vehicle vehicle={vehicle}></Vehicle>)
-            }
+                {
+                    vehicleData.map((vehicle) => <Vehicle vehicle={vehicle}></Vehicle>)
+                }
             </div>
         </div>
     );
