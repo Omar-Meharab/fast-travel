@@ -1,8 +1,11 @@
+import './Login.css';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from './firebase.config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 const Login = () => {
     if (firebase.apps.length === 0) {
@@ -31,17 +34,19 @@ const Login = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input name="firstName" ref={register({ required: true, maxLength: 20 })} />
+        <div className = "login-div">
+            <form className="login-form"  onSubmit={handleSubmit(onSubmit)}>
+                <input placeholder="Name" name="firstName" ref={register({ required: true, maxLength: 20 })} />
                 <br />
-                <input name="lastName" ref={register({ pattern: /^[A-Za-z]+$/i })} />
+                <input placeholder="Email" name="email" type="email" ref={register({ min: 18, max: 99 })} />
                 <br />
-                <input name="age" type="number" ref={register({ min: 18, max: 99 })} />
+                <input placeholder="Password" type="password" name="password" ref={register({ min: 18, max: 99 })} />
+                <br/>
+                <input placeholder="Confirm Password" type="password" name="confirmPassword" ref={register({ min: 18, max: 99 })} />
                 <br />
-                <input type="submit" />
+                <input className="btn btn-primary" type="submit" />
                 <p>or</p>
-                <button className="btn btn-primary" onClick={handleGoogleSignIn}>Google Sign In</button>
+                <button className="btn btn-primary" onClick={handleGoogleSignIn}><FontAwesomeIcon icon={faGoogle} /> Sign In</button>
                 <p>{user.email}</p>
             </form>
         </div>
