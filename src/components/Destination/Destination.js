@@ -13,6 +13,9 @@ const Destination = () => {
             <input placeholder="To" name="to" ref={register} />
             <br/>
             <input type="submit" />
+            <div>
+                <img src="https://i.ibb.co/BV8TDQz/ui.png" alt=""/>
+            </div>
         </form>
     );
 };

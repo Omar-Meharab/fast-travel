@@ -1,5 +1,5 @@
 import './Login.css';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -25,7 +25,10 @@ const Login = () => {
     if (firebase.apps.length === 0) {
         firebase.initializeApp(firebaseConfig);
     }
-    const { register, handleSubmit } = useForm();
+    const { register, errors, handleSubmit, watch } = useForm();
+    const password = useRef({});
+    password.current = watch("password", "");
+
     const onSubmit = (user) => {
         if (newUser && user.email && user.password) {
             firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
@@ -50,7 +53,10 @@ const Login = () => {
             console.log(newUser);
             firebase.auth().signInWithEmailAndPassword(user.email, user.password)
                 .then(res => {
-                    const newUserInfo = {...user};
+                    console.log(res);
+                    const { displayName } = res.user;
+                    const name = displayName;
+                    const newUserInfo = { ...user, name };
                     setUser(newUserInfo);
                     setLoggedInUser(newUserInfo);
                     history.replace(from);
@@ -84,13 +90,13 @@ const Login = () => {
 
     const updateUserName = name => {
         const user = firebase.auth().currentUser;
-    
+
         user.updateProfile({
             displayName: name,
         }).then(function () {
-    
+
         }).catch(function (error) {
-    
+
         });
     }
 
@@ -101,9 +107,32 @@ const Login = () => {
                 <br />
                 <input placeholder="Email" name="email" type="email" ref={register({ required: true, min: 18, max: 99 })} />
                 <br />
-                <input placeholder="Password" type="password" name="password" ref={register({ required: true, min: 18, max: 99 })} />
-                <br />
-                {newUser && <input placeholder="Confirm Password" type="password" name="confirmPassword" ref={register({ required: true, min: 18, max: 99 })} />}
+                {newUser ? <section>
+                    <input
+                        placeholder="Password"
+                        name="password"
+                        type="password"
+                        ref={register({
+                            required: "You must specify a password",
+                            minLength: {
+                                value: 8,
+                                message: "Password must have at least 8 characters"
+                            }
+                        })}
+                    />
+                    {errors.password && <p className="error">{errors.password.message}</p>}
+                    <br />
+                    <input
+                        placeholder="Confirm Password"
+                        name="password_repeat"
+                        type="password"
+                        ref={register({
+                            validate: value =>
+                                value === password.current || "The passwords do not match"
+                        })}
+                    />
+                    {errors.password_repeat && <p className="error">{errors.password_repeat.message}</p>}
+                </section> : <input placeholder="Password" type="password" name="password" ref={register({ required: true, min: 18, max: 99 })} />}
                 <br />
                 <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser" id="" />
                 <label htmlFor="newUser">New User Sign UP</label>

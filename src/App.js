@@ -18,7 +18,7 @@ export const UserContext = createContext();
 function App() {
   const backgroundImage = {
     backgroundImage: `url("https://i.ibb.co/z6zHHqR/background-image.jpg")`,
-    height: '1000px',
+    height: '1100px',
     backgroundPosition: 'center',
     backgroundSize: 'cover'
   };
@@ -53,9 +53,9 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            {/* <PrivateRoute path="/destination">
+            <PrivateRoute path="/destination">
               <Destination />
-            </PrivateRoute> */}
+            </PrivateRoute>
             <Route path="/contact">
               <Contact />
             </Route>
