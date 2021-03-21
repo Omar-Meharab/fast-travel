@@ -22,3 +22,6 @@ ul li{
     padding: 10px;
     float: left;
 }
+.user-name:empty{
+    display: none;
+}
